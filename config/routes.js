@@ -31,21 +31,38 @@ module.exports.routes = {
 
   'PUT /version/availability/:version/:timestamp': 'VersionController.availability',
 
-  'GET /download/latest/:platform?': 'AssetController.download',
-  'GET /download/channel/:channel/:platform?': 'AssetController.download',
+  // Tambahkan middleware downloadAccess untuk membatasi akses
+  'GET /download/latest/:platform?': {
+    controller: 'AssetController',
+    action: 'download',
+    middleware: ['downloadAccess'] // Middleware untuk download
+  },
+  'GET /download/channel/:channel/:platform?': {
+    controller: 'AssetController',
+    action: 'download',
+    middleware: ['downloadAccess'] // Middleware untuk download
+  },
   'GET /download/:version/:platform?/:filename?': {
     controller: 'AssetController',
     action: 'download',
-    // This is important since it allows matching with filenames.
-    skipAssets: false
+    skipAssets: false,
+    middleware: ['downloadAccess'] // Middleware untuk download
   },
-  'GET /download/flavor/:flavor/latest/:platform?': 'AssetController.download',
-  'GET /download/flavor/:flavor/channel/:channel/:platform?': 'AssetController.download',
+  'GET /download/flavor/:flavor/latest/:platform?': {
+    controller: 'AssetController',
+    action: 'download',
+    middleware: ['downloadAccess'] // Middleware untuk download
+  },
+  'GET /download/flavor/:flavor/channel/:channel/:platform?': {
+    controller: 'AssetController',
+    action: 'download',
+    middleware: ['downloadAccess'] // Middleware untuk download
+  },
   'GET /download/flavor/:flavor/:version/:platform?/:filename?': {
     controller: 'AssetController',
     action: 'download',
-    // This is important since it allows matching with filenames.
-    skipAssets: false
+    skipAssets: false,
+    middleware: ['downloadAccess'] // Middleware untuk download
   },
 
   'GET /update': 'VersionController.redirect',
@@ -77,3 +94,4 @@ module.exports.routes = {
   'GET /channels/sorted': 'ChannelController.list'
 
 };
+

@@ -12,6 +12,8 @@
 const mapSeries = require('async/mapSeries');
 const waterfall = require('async/waterfall');
 const series = require('async/series');
+const dotenv = require('dotenv');
+dotenv.config();
 
 module.exports.bootstrap = done => {
   series([
